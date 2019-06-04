@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/feature_main_nav_graph"
+            app:startDestination="@id/MainFragment">
+
+    <fragment
+            android:id="@+id/MainFragment"
+            android:name="com.roix.semenbelalov.roixcleanmvi.ui.main.views.MainFragment"
+            android:label="MainFragment"/>
+</navigation>
