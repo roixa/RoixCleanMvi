@@ -28,7 +28,7 @@ class EventBuilderTwoParams<Event1, Event2>(
     )
 
 class ActorBuilder<T, R>(channelProvider: ChannelProvider<T>, actor: Actor<T, R>) :
-    ChannelProvider<R>(channelProvider.channel.map(actor.act))
+    ChannelProvider<R>(channelProvider.channel.map(actor.go()))
 
 fun <T> LiveData<T>.toFlowable(lifecycleOwner: LifecycleOwner): Flowable<T> {
     return Flowable.fromPublisher(LiveDataReactiveStreams.toPublisher(lifecycleOwner, this))

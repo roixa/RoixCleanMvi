@@ -6,5 +6,6 @@ class StartedUseCaseBuilder<From>(channelProvider: ChannelProvider<From>) :
     ChannelProvider<From>(channelProvider.channel)
 
 class UseCaseBuilder<From, To>(channelProvider: ChannelProvider<From>, useCase: UseCase<From, To>) :
-    ChannelProvider<To>(channelProvider.channel.map(useCase.go)) {
+    ChannelProvider<To>(channelProvider.channel.map(useCase.go())) {
 }
+
