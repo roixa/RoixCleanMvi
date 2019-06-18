@@ -5,8 +5,12 @@ import com.roix.semenbelalov.roixcleanmvi.buissness.main.IMainInteractor
 import com.roix.semenbelalov.roixcleanmvi.data.models.MainItem
 import com.roix.semenbelalov.roixcleanmvi.di.main.MainModule
 import com.roix.semenbelalov.roixcleanmvi.mvi.ui.CoroutinesStateMachine
+import com.roix.semenbelalov.roixcleanmvi.mvi.ui.EventFlow
 import com.roix.semenbelalov.roixcleanmvi.mvi.ui.StateMachine
 import com.roix.semenbelalov.roixcleanmvi.ui.common.viewmodels.BaseListViewModel
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.flow.Flow
 import toothpick.config.Module
 import javax.inject.Inject
@@ -23,11 +27,21 @@ class MainViewModel : BaseListViewModel<MainItem>(), StateMachine<MainEvents, Ma
 
     private val machine = CoroutinesStateMachine(Started("hello "), this)
 
+    val events = EventFlow<MainEvents>(CoroutineScope(SupervisorJob() + Dispatchers.IO))
+
     override val module: Module = MainModule()
 
+    init {
+        events.from(MainInteractors())
+            .to(Started("hello"), MainReducer())
+            .bind { state ->
+                Log.d("roix mvi", "bind $state")
+            }
+    }
+
     fun onEvent() {
-        machine.publish(OnButtonClicked())
-//        publish(OnButtonClicked())
+//        machine.publish(OnButtonClicked())
+        events.publish(OnButtonClicked())
 
 
     }
