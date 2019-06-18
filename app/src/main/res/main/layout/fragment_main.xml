@@ -30,6 +30,10 @@
                 bind:toolbarType="@{toolbarType}"/>
 
 
+        <Button
+                android:text="Button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" android:id="@+id/button"/>
         <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
                 android:id="@+id/srl"
                 android:layout_width="match_parent"

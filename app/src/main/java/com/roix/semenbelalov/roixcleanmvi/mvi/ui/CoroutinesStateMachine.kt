@@ -9,21 +9,21 @@ import kotlinx.coroutines.flow.collect
 import kotlin.coroutines.CoroutineContext
 
 @ExperimentalCoroutinesApi
-class CoroutinesStateMachine(
-    initialState: State
+class CoroutinesStateMachine<E, U, S>(
+    initialState: S,
+    stateMachine: StateMachine<E, U, S>
 ) :
-    StateMachine<CoroutinesStateMachine.Event, CoroutinesStateMachine.Update, CoroutinesStateMachine.State>,
+    StateMachine<E, U, S> by stateMachine,
     CoroutineScope {
 
-    interface Event
-    interface Update
-    interface State
 
     override val coroutineContext: CoroutineContext = SupervisorJob() + Dispatchers.IO
 
-    private val mEvents = Channel<Event>(Channel.CONFLATED)
+    private val mEvents = Channel<E>(Channel.CONFLATED)
 
-    private val updateFlows = Channel<Flow<Update>>(Channel.UNLIMITED)
+    private val updateFlows = Channel<Flow<U>>(Channel.UNLIMITED)
+
+    private val updates = Channel<U>(Channel.UNLIMITED)
 
     private val mStates = ConflatedBroadcastChannel(initialState)
 
@@ -32,7 +32,12 @@ class CoroutinesStateMachine(
     init {
         launch {
             mEvents.consumeEach { event ->
-                updateFlows.send(handleEvent(event))
+                handleUpdates(event)?.let { update ->
+                    updateFlows.send(update)
+                }
+                handleUpdate(event)?.let { update ->
+                    updates.send(update)
+                }
             }
         }
         launch {
@@ -42,17 +47,23 @@ class CoroutinesStateMachine(
                 }
             }
         }
+        launch {
+            updates.consumeEach { update ->
+                mStates.send(updateState(state, update))
+            }
+        }
+        launch {
+            mStates.openSubscription().consumeEach {state->
+                bind(state)
+            }
+        }
     }
 
-    override fun publish(event: Event) {
+    override fun publish(event: E) {
         launch {
             mEvents.send(event)
         }
     }
-
-    override lateinit var handleEvent: (event: Event) -> Flow<Update>
-
-    override lateinit var updateState: (lastState: State, update: Update) -> State
 
     override fun close() {
         coroutineContext.cancel()

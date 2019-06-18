@@ -4,12 +4,16 @@ import kotlinx.coroutines.flow.Flow
 
 interface StateMachine<Event, Update, State> {
 
-    fun publish(event: Event)
+    fun publish(event: Event) {}
 
-    val handleEvent:(event: Event)-> Flow<Update>
+    suspend fun handleUpdates(event: Event): Flow<Update>?
+
+    suspend fun handleUpdate(event: Event): Update?
 
     val updateState:(lastState:State, update: Update)-> State
 
-    fun close()
+    fun bind(state: State)
+
+    fun close() {}
 
 }

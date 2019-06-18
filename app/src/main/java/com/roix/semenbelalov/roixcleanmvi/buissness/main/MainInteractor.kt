@@ -1,7 +1,7 @@
 package com.roix.semenbelalov.roixcleanmvi.buissness.main
 
-import javax.inject.Inject
 import com.roix.semenbelalov.roixcleanmvi.data.repositories.main.IMainRepository
+import javax.inject.Inject
 
 /**
  * Created by roix template
@@ -10,5 +10,8 @@ import com.roix.semenbelalov.roixcleanmvi.data.repositories.main.IMainRepository
 
 class MainInteractor @Inject constructor(val repository: IMainRepository) : IMainInteractor {
 
-
+    override suspend fun getText(): String {
+        Thread.sleep(1000)
+        return "world"
+    }
 }

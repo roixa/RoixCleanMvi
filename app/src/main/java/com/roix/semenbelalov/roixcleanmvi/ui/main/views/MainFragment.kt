@@ -3,10 +3,10 @@ package com.roix.semenbelalov.roixcleanmvi.ui.main.views
 import androidx.appcompat.widget.Toolbar
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-import com.roix.semenbelalov.roixcleanmvi.data.models.MainItem
-import com.roix.semenbelalov.roixcleanmvi.databinding.ItemMainBinding
 import com.roix.semenbelalov.roixcleanmvi.R
+import com.roix.semenbelalov.roixcleanmvi.data.models.MainItem
 import com.roix.semenbelalov.roixcleanmvi.databinding.FragmentMainBinding
+import com.roix.semenbelalov.roixcleanmvi.databinding.ItemMainBinding
 import com.roix.semenbelalov.roixcleanmvi.ui.common.fragments.BaseToolbarListFragment
 import com.roix.semenbelalov.roixcleanmvi.ui.main.viewmodels.MainViewModel
 
@@ -31,6 +31,9 @@ class MainFragment : BaseToolbarListFragment<MainViewModel, FragmentMainBinding,
     override fun setupBinding() {
         super.setupBinding()
         toolbarType.title.value = getString(R.string.title_main)
+        binding.button.setOnClickListener {
+            viewModel.onEvent()
+        }
     }
 
 
