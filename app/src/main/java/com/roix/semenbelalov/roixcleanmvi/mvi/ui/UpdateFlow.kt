@@ -27,7 +27,6 @@ class UpdateFlow<E, U>(val scope: CoroutineScope) {
         }
     }
 
-
     fun <S> to(initialState: S, reducer: Reducer<U, S>) = StateFlow(updates, scope, initialState, reducer)
 
     fun <S> to(initialState: S, reducer: (S, U) -> S) = StateFlow(updates, scope, initialState, reducer)
