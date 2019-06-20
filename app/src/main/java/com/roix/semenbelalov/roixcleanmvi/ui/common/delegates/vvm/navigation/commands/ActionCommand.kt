@@ -6,5 +6,5 @@ package com.roix.semenbelalov.roixcleanmvi.ui.common.delegates.vvm.navigation.co
  */
 
 
-//TODO bad inheritance had to analyze
+//TODO bad inheritance had reduce analyze
 class ActionCommand(actionCommand: Int, params: Any?) : ScreenCommand(actionCommand, params)

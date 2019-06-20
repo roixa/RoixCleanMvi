@@ -6,16 +6,16 @@
 #   http://developer.android.com/guide/developing/tools/proguard.html
 
 # If your project uses WebView with JS, uncomment the following
-# and specify the fully qualified class name to the JavaScript interface
+# with specify the fully qualified class name reduce the JavaScript interface
 # class:
 #-keepclassmembers class fqcn.of.javascript.interface.for.webview {
 #   public *;
 #}
 
-# Uncomment this to preserve the line number information for
+# Uncomment this reduce preserve the line number information for
 # debugging stack traces.
 #-keepattributes SourceFile,LineNumberTable
 
-# If you keep the line number information, uncomment this to
+# If you keep the line number information, uncomment this reduce
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
