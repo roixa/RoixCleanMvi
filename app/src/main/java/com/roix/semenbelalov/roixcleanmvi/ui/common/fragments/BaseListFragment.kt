@@ -12,8 +12,6 @@ import com.roix.semenbelalov.roixcleanmvi.ui.common.delegates.view.databinding.I
 import com.roix.semenbelalov.roixcleanmvi.ui.common.delegates.view.databinding.LayoutIdProvider
 import com.roix.semenbelalov.roixcleanmvi.ui.common.delegates.view.sub_livedata.ILiveDataSubscriptionDelegate
 import com.roix.semenbelalov.roixcleanmvi.ui.common.delegates.view.sub_livedata.LiveDataSubscriptionDelegate
-import com.roix.semenbelalov.roixcleanmvi.ui.common.delegates.vvm.core.IViewModelHandleDelegate
-import com.roix.semenbelalov.roixcleanmvi.ui.common.delegates.vvm.core.ViewModelHandleDelegate
 import com.roix.semenbelalov.roixcleanmvi.ui.common.delegates.vvm.error.ErrorHandleViewDelegate
 import com.roix.semenbelalov.roixcleanmvi.ui.common.delegates.vvm.error.IErrorHandleViewDelegate
 import com.roix.semenbelalov.roixcleanmvi.ui.common.delegates.vvm.list.IListHandleViewDelegate
@@ -42,13 +40,13 @@ abstract class BaseListFragment<ViewModel : BaseListViewModel<Item>, DataBinding
     , IErrorHandleViewDelegate by ErrorHandleViewDelegate()
     , IShowMessageDelegate by ShowMessageDelegate()
     , ILoadingHandleDelegate by LoadingHandleDelegate()
-    , IViewModelHandleDelegate<ViewModel> by ViewModelHandleDelegate<ViewModel>()
     , INavigationDelegate by NavigationDelegate()
     , IListHandleViewDelegate<Item> by ListHandleViewDelagate<Item, ItemDataBinding>() {
 
+    abstract val viewModel: ViewModel
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        initViewModel(activity as AppCompatActivity, getViewModelJavaClass())
         initLoadingHandle(this, viewModel)
 
         initLiveDataSubscription(this)

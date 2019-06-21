@@ -16,8 +16,6 @@ import com.roix.semenbelalov.roixcleanmvi.ui.common.delegates.view.sub_livedata.
 import com.roix.semenbelalov.roixcleanmvi.ui.common.delegates.view.toolbar.IToolbarDelegate
 import com.roix.semenbelalov.roixcleanmvi.ui.common.delegates.view.toolbar.ToolbarDelegate
 import com.roix.semenbelalov.roixcleanmvi.ui.common.delegates.view.toolbar.ToolbarProvider
-import com.roix.semenbelalov.roixcleanmvi.ui.common.delegates.vvm.core.IViewModelHandleDelegate
-import com.roix.semenbelalov.roixcleanmvi.ui.common.delegates.vvm.core.ViewModelHandleDelegate
 import com.roix.semenbelalov.roixcleanmvi.ui.common.delegates.vvm.error.ErrorHandleViewDelegate
 import com.roix.semenbelalov.roixcleanmvi.ui.common.delegates.vvm.error.IErrorHandleViewDelegate
 import com.roix.semenbelalov.roixcleanmvi.ui.common.delegates.vvm.loading.ILoadingHandleDelegate
@@ -42,13 +40,15 @@ abstract class BaseToolbarFragment<ViewModel : BaseViewModel, DataBinding : View
     , IErrorHandleViewDelegate by ErrorHandleViewDelegate()
     , IShowMessageDelegate by ShowMessageDelegate()
     , ILoadingHandleDelegate by LoadingHandleDelegate()
-    , IViewModelHandleDelegate<ViewModel> by ViewModelHandleDelegate<ViewModel>()
     , INavigationDelegate by NavigationDelegate()
     , IToolbarDelegate by ToolbarDelegate() {
 
+
+    abstract val viewModel: ViewModel
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        initViewModel(activity as AppCompatActivity, getViewModelJavaClass())
         initLoadingHandle(this, viewModel)
 
         initLiveDataSubscription(this)

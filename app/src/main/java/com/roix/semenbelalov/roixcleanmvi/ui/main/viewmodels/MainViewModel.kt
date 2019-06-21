@@ -1,58 +1,46 @@
 package com.roix.semenbelalov.roixcleanmvi.ui.main.viewmodels
 
 import android.util.Log
-import com.roix.semenbelalov.roixcleanmvi.data.models.MainItem
-import com.roix.semenbelalov.roixcleanmvi.di.main.MainModule
 import com.roix.cleanmvi.channel.IRoixChannel
 import com.roix.cleanmvi.channel.RoixChannel
+import com.roix.semenbelalov.roixcleanmvi.buissness.main.MultiAddUseCase
+import com.roix.semenbelalov.roixcleanmvi.buissness.main.models.Event
+import com.roix.semenbelalov.roixcleanmvi.data.models.MainItem
 import com.roix.semenbelalov.roixcleanmvi.ui.common.viewmodels.BaseListViewModel
-import toothpick.config.Module
+import com.roix.semenbelalov.roixcleanmvi.ui.main.models.MainReducer
+import com.roix.semenbelalov.roixcleanmvi.ui.main.models.State
+import com.roix.semenbelalov.roixcleanmvi.ui.main.models.UIEvent
 
 /**
  * Created by roix template
  * https://github.com/roixa/RoixArchitectureTemplates
  */
-class MainViewModel : BaseListViewModel<MainItem>(),
-    IRoixChannel<MainEvents> by RoixChannel() {
-
-    override val module: Module = MainModule()
+class MainViewModel(multiAddUseCase: MultiAddUseCase) : BaseListViewModel<MainItem>(),
+    IRoixChannel<UIEvent> by RoixChannel() {
 
     init {
-
-        go(MainUseCase())
-            .reduce(Started("Hello"), MainReducer())
+        go { convertUiToEvents(it) }
+            .go(multiAddUseCase)
+            .reduce(State(0, emptyList()), MainReducer())
             .sub {
-                items.update(emptyList())
-                Log.d("roix mvi", "sub $it + ${Thread.currentThread().name}")
+                items.update(it.results)
+                Log.d("roix mvi", it.toString())
             }
-
-        cast<OnButtonClicked>()
-            .cast<MainEvents>()
-            .go(MainUseCase())
-            .with(
-                go(MainUseCase())
-            )
-            .reduce(Started("HS"), MainReducer())
-            .sub {
-                Log.d("roix mvi", "sub $it + ${Thread.currentThread().name}")
-
-            }
-
-        go { event ->
-            Log.d("roix mvi", "from $event")
-            Thread.sleep(3000)
-            return@go BuzzUpdate("world")
-        }.reduce(Started("Hi")) { state, update ->
-            Log.d("roix mvi", "reduce $state $update")
-            return@reduce state.copy(text = "dadas")
-        }.sub { state ->
-            Log.d("roix mvi", "bind $state")
-        }
     }
 
     fun onEvent() {
-        pub(OnButtonClicked())
+        pub(UIEvent.OnAddSingleClicked)
     }
 
 
+    private fun convertUiToEvents(uiEvent: UIEvent): Event {
+        val step = items.value?.size ?: 0
+        return if (uiEvent is UIEvent.OnAddSingleClicked) {
+            Event.SingleEvent(step)
+        } else {
+            Event.MultiEvent(step)
+
+        }
+
+    }
 }

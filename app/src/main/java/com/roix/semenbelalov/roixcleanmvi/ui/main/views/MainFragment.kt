@@ -9,6 +9,7 @@ import com.roix.semenbelalov.roixcleanmvi.databinding.FragmentMainBinding
 import com.roix.semenbelalov.roixcleanmvi.databinding.ItemMainBinding
 import com.roix.semenbelalov.roixcleanmvi.ui.common.fragments.BaseToolbarListFragment
 import com.roix.semenbelalov.roixcleanmvi.ui.main.viewmodels.MainViewModel
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 /**
  * Created by roix template
@@ -16,6 +17,9 @@ import com.roix.semenbelalov.roixcleanmvi.ui.main.viewmodels.MainViewModel
  */
 
 class MainFragment : BaseToolbarListFragment<MainViewModel, FragmentMainBinding, MainItem, ItemMainBinding>() {
+
+
+    override val viewModel: MainViewModel by viewModel()
 
     override val layoutId: Int = R.layout.fragment_main
 
