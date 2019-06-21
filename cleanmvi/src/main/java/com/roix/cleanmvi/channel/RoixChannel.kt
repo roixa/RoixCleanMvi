@@ -58,7 +58,7 @@ class RoixChannel<T>(
         }
     }
 
-    override fun <U> cast() = RoixChannel<U>(backgroundScope, uiScope).apply {
+    override fun <U> act() = RoixChannel<U>(backgroundScope, uiScope).apply {
         backgroundScope.launch {
             val from = this@RoixChannel.channel
             val to = this@apply.channel

@@ -8,11 +8,10 @@ import kotlinx.coroutines.flow.flow
 
 class MultiAddUseCase(val singleAddUseCase: SingleAddUseCase) : FlowUseCase<Event, Update> {
 
-    override suspend fun go(): (event: Event) -> Flow<Update>? = { event ->
+    override suspend fun go(): (event: Event) -> Flow<Update>? = {
         flow {
             for (i in 0..5) {
-                val count = event.step + i
-                singleAddUseCase.go().invoke(Event.MultiEvent(count))?.let { emit(it) }
+                singleAddUseCase.go().invoke(Event.MultiEvent)?.let { emit(it) }
             }
 
         }

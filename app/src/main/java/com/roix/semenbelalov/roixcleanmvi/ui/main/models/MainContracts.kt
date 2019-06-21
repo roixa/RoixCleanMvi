@@ -9,5 +9,5 @@ sealed class UIEvent {
 
 }
 
-data class State(val step: Int, val results: List<MainItem>)
+data class State(val results: List<MainItem>)
 

@@ -20,17 +20,18 @@ class MainViewModel(singleAddUseCase: SingleAddUseCase, multiAddUseCase: MultiAd
     BaseListViewModel<MainItem>(),
     IRoixChannel<UIEvent> by RoixChannel() {
 
-    var step = 0
-
     init {
         go { convertUiToEvents(it) }
-            .go(multiAddUseCase)
-            .reduce(State(0, emptyList()), MainReducer())
+            .act<Event.SingleEvent>()
+            .go(singleAddUseCase)
+//            .with(go(multiAddUseCase))
+            .reduce(State(emptyList()), MainReducer())
             .sub {
                 items.update(it.results)
-                step = it.results.size
                 Log.d("roix mvi", it.toString())
             }
+
+
     }
 
     fun onEvent() {
@@ -40,9 +41,9 @@ class MainViewModel(singleAddUseCase: SingleAddUseCase, multiAddUseCase: MultiAd
 
     private fun convertUiToEvents(uiEvent: UIEvent): Event {
         return if (uiEvent is UIEvent.OnAddSingleClicked) {
-            Event.SingleEvent(step)
+            Event.SingleEvent
         } else {
-            Event.MultiEvent(step)
+            Event.MultiEvent
 
         }
 
