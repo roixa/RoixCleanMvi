@@ -1,8 +1,8 @@
-package com.roix.semenbelalov.roixcleanmvi.mvi.channel
+package com.roix.cleanmvi.channel
 
-import com.roix.semenbelalov.roixcleanmvi.mvi.buissness.FlowUseCase
-import com.roix.semenbelalov.roixcleanmvi.mvi.buissness.UseCase
-import com.roix.semenbelalov.roixcleanmvi.mvi.ui.Reducer
+import com.roix.cleanmvi.buissness.FlowUseCase
+import com.roix.cleanmvi.buissness.UseCase
+import com.roix.cleanmvi.ui.Reducer
 import kotlinx.coroutines.CoroutineScope
 
 interface IRoixChannel<T> {

@@ -3,8 +3,8 @@ package com.roix.semenbelalov.roixcleanmvi.ui.main.viewmodels
 import android.util.Log
 import com.roix.semenbelalov.roixcleanmvi.data.models.MainItem
 import com.roix.semenbelalov.roixcleanmvi.di.main.MainModule
-import com.roix.semenbelalov.roixcleanmvi.mvi.channel.IRoixChannel
-import com.roix.semenbelalov.roixcleanmvi.mvi.channel.RoixChannel
+import com.roix.cleanmvi.channel.IRoixChannel
+import com.roix.cleanmvi.channel.RoixChannel
 import com.roix.semenbelalov.roixcleanmvi.ui.common.viewmodels.BaseListViewModel
 import toothpick.config.Module
 
@@ -27,12 +27,13 @@ class MainViewModel : BaseListViewModel<MainItem>(),
             }
 
         cast<OnButtonClicked>()
-        cast<MainEvents>()
+            .cast<MainEvents>()
             .go(MainUseCase())
             .with(
                 go(MainUseCase())
             )
-            .reduce(Started("HS"), MainReducer()).sub {
+            .reduce(Started("HS"), MainReducer())
+            .sub {
                 Log.d("roix mvi", "sub $it + ${Thread.currentThread().name}")
 
             }

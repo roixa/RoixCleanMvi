@@ -1,4 +1,4 @@
-package com.roix.semenbelalov.roixcleanmvi.mvi.ui
+package com.roix.cleanmvi.test
 
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.channels.ReceiveChannel

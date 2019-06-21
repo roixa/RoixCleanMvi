@@ -1,5 +1,6 @@
-package com.roix.semenbelalov.roixcleanmvi.mvi.ui
+package com.roix.cleanmvi.test
 
+import com.roix.cleanmvi.ui.Reducer
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.channels.ConflatedBroadcastChannel
 import kotlinx.coroutines.channels.ReceiveChannel

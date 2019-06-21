@@ -1,7 +1,7 @@
 package com.roix.semenbelalov.roixcleanmvi.ui.main.viewmodels
 
 import android.util.Log
-import com.roix.semenbelalov.roixcleanmvi.mvi.buissness.UseCase
+import com.roix.cleanmvi.buissness.UseCase
 
 class MainUseCase : UseCase<MainEvents, MainUpdates> {
     override suspend fun go(): (MainEvents) -> MainUpdates? = {

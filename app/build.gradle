@@ -66,6 +66,9 @@ android {
 }
 
 dependencies {
+    implementation project(':cleanmvi')
+
+
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation 'androidx.appcompat:appcompat:1.0.2'
@@ -100,8 +103,6 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
     kapt 'com.github.hotchemi:permissionsdispatcher-processor:2.4.0'
     kapt 'com.github.stephanenicolas.toothpick:toothpick-compiler:1.0.8'
-
-    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.3.0-M1"
 
 }
 

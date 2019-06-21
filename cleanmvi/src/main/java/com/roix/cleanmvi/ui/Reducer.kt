@@ -1,4 +1,4 @@
-package com.roix.semenbelalov.roixcleanmvi.mvi.ui
+package com.roix.cleanmvi.ui
 
 interface Reducer<U, S> {
     fun go(): (S, U) -> S

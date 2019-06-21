@@ -1,7 +1,7 @@
 package com.roix.semenbelalov.roixcleanmvi.ui.main.viewmodels
 
 import android.util.Log
-import com.roix.semenbelalov.roixcleanmvi.mvi.ui.Reducer
+import com.roix.cleanmvi.ui.Reducer
 
 class MainReducer : Reducer<MainUpdates, MainStates> {
     override fun go(): (MainStates, MainUpdates) -> MainStates = { mainStates, mainUpdates ->

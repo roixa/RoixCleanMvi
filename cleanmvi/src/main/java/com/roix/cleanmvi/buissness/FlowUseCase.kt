@@ -1,4 +1,4 @@
-package com.roix.semenbelalov.roixcleanmvi.mvi.buissness
+package com.roix.cleanmvi.buissness
 
 import kotlinx.coroutines.flow.Flow
 

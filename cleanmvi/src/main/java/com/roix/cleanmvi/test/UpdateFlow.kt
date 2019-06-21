@@ -1,6 +1,7 @@
-package com.roix.semenbelalov.roixcleanmvi.mvi.ui
+package com.roix.cleanmvi.test
 
-import com.roix.semenbelalov.roixcleanmvi.mvi.buissness.UseCase
+import com.roix.cleanmvi.buissness.UseCase
+import com.roix.cleanmvi.ui.Reducer
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.channels.ReceiveChannel
@@ -27,8 +28,10 @@ class UpdateFlow<E, U>(val scope: CoroutineScope) {
         }
     }
 
-    fun <S> to(initialState: S, reducer: Reducer<U, S>) = StateFlow(updates, scope, initialState, reducer)
+    fun <S> to(initialState: S, reducer: Reducer<U, S>) =
+        StateFlow(updates, scope, initialState, reducer)
 
-    fun <S> to(initialState: S, reducer: (S, U) -> S) = StateFlow(updates, scope, initialState, reducer)
+    fun <S> to(initialState: S, reducer: (S, U) -> S) =
+        StateFlow(updates, scope, initialState, reducer)
 
 }
