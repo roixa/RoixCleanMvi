@@ -87,8 +87,8 @@ class RoixChannel<T>(
         backgroundScope.launch {
             val from = this@RoixChannel.channel
             val to = this@apply.channel
-            val last = to.value ?: initialState
             from.consumeEach { update ->
+                val last = to.valueOrNull ?: initialState
                 if (last != null && update != null) {
                     to.send(reducer.go().invoke(last, update))
                 }
@@ -102,8 +102,8 @@ class RoixChannel<T>(
         backgroundScope.launch {
             val from = this@RoixChannel.channel
             val to = this@apply.channel
-            val last = to.value ?: initialState
             from.consumeEach { update ->
+                val last = to.valueOrNull ?: initialState
                 if (last != null && update != null) {
                     to.send(reducer.invoke(last, update))
                 }

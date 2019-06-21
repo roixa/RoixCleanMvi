@@ -19,5 +19,5 @@ val mainModule = module {
     single<IFuzzRepository> { FuzzRepository() }
     single { SingleAddUseCase(get(), get()) }
     single { MultiAddUseCase(get()) }
-    viewModel { MainViewModel(get()) }
+    viewModel { MainViewModel(get(), get()) }
 }

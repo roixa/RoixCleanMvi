@@ -11,8 +11,10 @@ class MultiAddUseCase(val singleAddUseCase: SingleAddUseCase) : FlowUseCase<Even
     override suspend fun go(): (event: Event) -> Flow<Update>? = { event ->
         flow {
             for (i in 0..5) {
-                singleAddUseCase.go().invoke(event)?.let { emit(it) }
+                val count = event.step + i
+                singleAddUseCase.go().invoke(Event.MultiEvent(count))?.let { emit(it) }
             }
+
         }
     }
 }

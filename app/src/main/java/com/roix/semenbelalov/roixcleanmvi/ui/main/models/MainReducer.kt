@@ -8,7 +8,7 @@ class MainReducer : Reducer<Update, State> {
     override fun go(): (State, Update) -> State = { state, update ->
         val step = state.step + 1
         val newList = state.results.toMutableList()
-        newList.add(MainItem("$step ${update.result}"))
-        state.copy(step = step, results = newList)
+        newList.add(MainItem(update.result))
+        State(step = step, results = newList)
     }
 }
