@@ -21,6 +21,5 @@ class CommonApplication : Application() {
             // modules
             modules(mainModule)
         }
-
     }
 }

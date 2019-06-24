@@ -16,31 +16,35 @@ import com.roix.semenbelalov.roixcleanmvi.ui.main.models.UIEvent
  * Created by roix template
  * https://github.com/roixa/RoixArchitectureTemplates
  */
-class MainViewModel(singleAddUseCase: SingleAddUseCase, multiAddUseCase: MultiAddUseCase) :
+class MainViewModel(
+    singleAddUseCase: SingleAddUseCase,
+    multiAddUseCase: MultiAddUseCase,
+    mainReducer: MainReducer
+) :
     BaseListViewModel<MainItem>(),
-    IRoixChannel<UIEvent> by RoixChannel() {
+    IRoixChannel<Event> by RoixChannel() {
 
     init {
-        go { convertUiToEvents(it) }.run {
+        val initialState = State(emptyList())
+//        go { convertUiToEvents(it) }
             go(multiAddUseCase)
-                .with(go(singleAddUseCase))
-
-        }
-            .reduce(State(emptyList()), MainReducer())
-            .sub {
-                items.update(it.results)
-                Log.d("roix mvi", "sub" + Thread.currentThread().name)
-            }
+                .with(
+                    go(singleAddUseCase)
+                )
+                .reduce(initialState, mainReducer)
+                .sub {
+                    items.update(it.results)
+                    Log.d("roix mvi", "sub" + Thread.currentThread().name)
+                }
     }
 
     fun onClickedAddSingle() {
-        pub(UIEvent.OnAddSingleClicked)
+        pub(Event.SingleEvent)
     }
 
     fun onClickedAddMulty() {
-        pub(UIEvent.OnAddMultiClicked)
+        pub(Event.MultiEvent)
     }
-
 
 
     private fun convertUiToEvents(uiEvent: UIEvent): Event {
