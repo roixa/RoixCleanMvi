@@ -12,9 +12,10 @@ class SingleAddUseCase(
     val buzzRepository: IBuzzRepository,
     val stepRepository: IStepRepository
 ) :
-    UseCase<Event.SingleEvent, Update> {
+    UseCase<Event, Update> {
     override suspend fun go(): (event: Event) -> Update? = {
-        val count = stepRepository.getNextStep()
+        if (it is Event.SingleEvent) {
+            val count = stepRepository.getNextStep()
             var ret = "$count "
             if (count % 3 == 0) {
                 ret += fuzzRepository.getFuzz()
@@ -24,5 +25,6 @@ class SingleAddUseCase(
             }
             Update(ret)
 
+        } else null
     }
 }

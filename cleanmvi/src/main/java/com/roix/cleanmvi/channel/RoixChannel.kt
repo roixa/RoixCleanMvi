@@ -23,11 +23,13 @@ class RoixChannel<T>(
         backgroundScope.launch {
             val from = this@RoixChannel.channel
             val to = this@apply.channel
+
             from.consumeEach { event ->
                 if (event != null) {
                     useCase.go().invoke(event)?.let { to.send(it) }
                 }
             }
+
         }
     }
 
@@ -38,7 +40,9 @@ class RoixChannel<T>(
             from.consumeEach { event ->
                 if (event != null) {
                     useCase.go().invoke(event)?.let { flow ->
-                        flow.collect { to.send(it) }
+                        flow.collect {
+                            to.send(it)
+                        }
                     }
                 }
             }
@@ -58,7 +62,7 @@ class RoixChannel<T>(
         }
     }
 
-    override fun <U> act() = RoixChannel<U>(backgroundScope, uiScope).apply {
+    override fun <U> cast() = RoixChannel<U>(backgroundScope, uiScope).apply {
         backgroundScope.launch {
             val from = this@RoixChannel.channel
             val to = this@apply.channel

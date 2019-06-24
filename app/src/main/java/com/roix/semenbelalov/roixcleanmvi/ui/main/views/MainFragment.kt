@@ -29,15 +29,11 @@ class MainFragment : BaseToolbarListFragment<MainViewModel, FragmentMainBinding,
 
     override fun getSwipeToRefreshLayout(): SwipeRefreshLayout? = binding.srl
 
-
     override fun getToolbar(): Toolbar? = binding.toolbar.tb
 
     override fun setupBinding() {
         super.setupBinding()
         toolbarType.title.value = getString(R.string.title_main)
-        binding.button.setOnClickListener {
-            viewModel.onEvent()
-        }
     }
 
 

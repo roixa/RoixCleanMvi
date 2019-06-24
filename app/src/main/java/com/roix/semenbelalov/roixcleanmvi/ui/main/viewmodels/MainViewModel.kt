@@ -21,31 +21,32 @@ class MainViewModel(singleAddUseCase: SingleAddUseCase, multiAddUseCase: MultiAd
     IRoixChannel<UIEvent> by RoixChannel() {
 
     init {
-        go { convertUiToEvents(it) }
-            .act<Event.SingleEvent>()
-            .go(singleAddUseCase)
-//            .with(go(multiAddUseCase))
+        go { convertUiToEvents(it) }.run {
+            go(multiAddUseCase)
+                .with(go(singleAddUseCase))
+
+        }
             .reduce(State(emptyList()), MainReducer())
             .sub {
                 items.update(it.results)
-                Log.d("roix mvi", it.toString())
+                Log.d("roix mvi", "sub" + Thread.currentThread().name)
             }
-
-
     }
 
-    fun onEvent() {
+    fun onClickedAddSingle() {
         pub(UIEvent.OnAddSingleClicked)
     }
 
+    fun onClickedAddMulty() {
+        pub(UIEvent.OnAddMultiClicked)
+    }
+
+
 
     private fun convertUiToEvents(uiEvent: UIEvent): Event {
-        return if (uiEvent is UIEvent.OnAddSingleClicked) {
-            Event.SingleEvent
-        } else {
-            Event.MultiEvent
-
+        return when (uiEvent) {
+            is UIEvent.OnAddSingleClicked -> Event.SingleEvent
+            else -> Event.MultiEvent
         }
-
     }
 }

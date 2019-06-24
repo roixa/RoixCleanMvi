@@ -17,7 +17,7 @@ interface IRoixChannel<T> {
 
     fun <U> go(useCase: suspend (T) -> U?): IRoixChannel<U>
 
-    fun <U> act(): IRoixChannel<U>
+    fun <U> cast(): IRoixChannel<U>
 
     fun with(channel: IRoixChannel<T>): IRoixChannel<T>
 
