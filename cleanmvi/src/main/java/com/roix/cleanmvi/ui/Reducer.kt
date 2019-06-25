@@ -1,5 +1,5 @@
 package com.roix.cleanmvi.ui
 
-interface Reducer<U, S> {
+interface Reducer<S, U> {
     fun go(): (S, U) -> S
 }

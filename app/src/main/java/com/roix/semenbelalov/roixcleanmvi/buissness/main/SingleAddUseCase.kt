@@ -15,6 +15,7 @@ class SingleAddUseCase(
     UseCase<Event, Update> {
     override suspend fun go(): (event: Event) -> Update? = {
         if (it is Event.SingleEvent) {
+            Thread.sleep(300)
             val count = stepRepository.getNextStep()
             var ret = "$count "
             if (count % 3 == 0) {

@@ -17,7 +17,7 @@ class MultiAddUseCase(
 
     override suspend fun go(): (event: Event) -> Flow<Update>? = { event ->
         if (event is Event.MultiEvent) {
-            flow {
+                flow {
                 repeat(5) {
                     oneStep(event)?.let {
                         emit(it)

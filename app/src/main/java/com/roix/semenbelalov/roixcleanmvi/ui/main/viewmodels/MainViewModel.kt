@@ -31,7 +31,7 @@ class MainViewModel(
                 .with(
                     go(singleAddUseCase)
                 )
-                .reduce(initialState, mainReducer)
+                .to(initialState, mainReducer)
                 .sub {
                     items.update(it.results)
                     Log.d("roix mvi", "sub" + Thread.currentThread().name)
@@ -45,7 +45,6 @@ class MainViewModel(
     fun onClickedAddMulty() {
         pub(Event.MultiEvent)
     }
-
 
     private fun convertUiToEvents(uiEvent: UIEvent): Event {
         return when (uiEvent) {

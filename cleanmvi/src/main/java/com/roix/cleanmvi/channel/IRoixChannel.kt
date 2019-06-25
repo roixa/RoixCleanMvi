@@ -21,9 +21,9 @@ interface IRoixChannel<T> {
 
     fun with(channel: IRoixChannel<T>): IRoixChannel<T>
 
-    fun <S> reduce(initialState: S?, reducer: Reducer<T, S>): IRoixChannel<S>
+    fun <S> to(initialState: S, reducer: Reducer<S, T>): IRoixChannel<S>
 
-    fun <S> reduce(initialState: S?, reducer: (S, T) -> S): IRoixChannel<S>
+    fun <S> to(initialState: S, reducer: (S, T) -> S): IRoixChannel<S>
 
     fun pub(event: T)
 

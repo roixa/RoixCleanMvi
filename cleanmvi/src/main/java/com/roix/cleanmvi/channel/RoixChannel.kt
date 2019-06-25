@@ -87,13 +87,13 @@ class RoixChannel<T>(
     }
 
     @ObsoleteCoroutinesApi
-    override fun <S> reduce(initialState: S?, reducer: Reducer<T, S>) = RoixChannel<S>(backgroundScope, uiScope).apply {
+    override fun <S> to(initialState: S, reducer: Reducer<S, T>) = RoixChannel<S>(backgroundScope, uiScope).apply {
         backgroundScope.launch {
             val from = this@RoixChannel.channel
             val to = this@apply.channel
             from.consumeEach { update ->
                 val last = to.valueOrNull ?: initialState
-                if (last != null && update != null) {
+                if (update != null) {
                     to.send(reducer.go().invoke(last, update))
                 }
             }
@@ -102,13 +102,13 @@ class RoixChannel<T>(
     }
 
     @ObsoleteCoroutinesApi
-    override fun <S> reduce(initialState: S?, reducer: (S, T) -> S) = RoixChannel<S>(backgroundScope, uiScope).apply {
+    override fun <S> to(initialState: S, reducer: (S, T) -> S) = RoixChannel<S>(backgroundScope, uiScope).apply {
         backgroundScope.launch {
             val from = this@RoixChannel.channel
             val to = this@apply.channel
             from.consumeEach { update ->
                 val last = to.valueOrNull ?: initialState
-                if (last != null && update != null) {
+                if (update != null) {
                     to.send(reducer.invoke(last, update))
                 }
             }
