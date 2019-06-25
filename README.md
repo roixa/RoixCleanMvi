@@ -50,3 +50,11 @@ class SingleAddUseCase(
     }
 }
 ```
+
+Reducer 
+
+```
+interface Reducer<S, U> {
+    fun go(): (S, U) -> S
+}
+```
