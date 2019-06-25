@@ -14,7 +14,7 @@ You should publish event to channel, subscribe and transform
         pub(Event.MultiEvent)
 ```
 
-RoixChannel is carcass of MVI chains 
+RoixChannel is carcass for MVI chains 
 ```
     : IRoixChannel<Event> by RoixChannel() {
 ...
