@@ -24,7 +24,7 @@ RoixChannel is carcass of MVI chains
                     Log.d("roix mvi", "sub" + Thread.currentThread().name)
                 }
  ```
-Usecase contain suspend fun go() wich executed in IO backgrond thread by default 
+Usecase contains suspend fun go() wich executed in IO backgrond thread by default 
 
 ```
 class SingleAddUseCase(
